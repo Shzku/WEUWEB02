@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html land="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Running Championship</title>
+        <style>
+            body {
+                font-family: 'Times New Roman', Times, serif;
+            }
+            td {
+                padding: 10x;
+                
+            }
+            section {
+                width: 860px; margin:auto;
+                
+            }
+            .mainInfo {
+                border: 2px solid yellow;
+            }
+            .timeInfo{
+                border: 2px solid red
+            }
+            .adminInfo{
+                border: 2px solid black
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+
+            <h1>Kista Running Tournament 400m</h1>
+
+            <fieldset class = "adminInfo">
+                <legend>Administrative </legend>
+                <input id="shuffle" type="button" value="Shuffle Participants">
+                <input id="best" type="button" value="Sort by Best Time">
+                <input id="start" type="button" value="Sort by Number">
+            </fieldset>
+
+            <fieldset class = "mainInfo">
+                <legend> Register Participant </legend>
+                <form>
+                    Name: <input type="text" id="name">
+                    Surname: <input type="text" id="surname">
+                    Club: <input type="text" id="club">
+                    <input id="store" type="button" value="Register Participant">
+                </form>  
+            </fieldset>
+            
+            <fieldset class = "timeInfo">
+                <legend>Register Time</legend>
+                <form>
+                    Number: <input type = "text" id = "number">
+                    Time: <input type = "text" id = "time">
+                    <input id="storeTime" type="button" value="Register Time">
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <legend>Results </legend>
+                <div class = "print" id="print"></div>
+            </fieldset>
+
+            <script src="Running_Championship_JS.js"></script>
+
+        </section>
+    </body>
+
+</html>
