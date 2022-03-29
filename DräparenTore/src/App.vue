@@ -1,5 +1,13 @@
 <script lang="ts">
 let id = 0;
+let AttackLog: logObject[] = []
+
+interface logObject {
+  attackID: number;
+  name: string;
+  action: string;
+  healthPoints: number;
+}
 
 export default {
   data() {
@@ -9,10 +17,9 @@ export default {
       GameOver: false, // Use to check whether the game is over and should hide the buttons
       Winner: "",
       SpecialCounter: 0,
-      AttackLog: [
-      ],
       EnemyTurnDamage: 0,
       ToreTurnDamage: 0,
+      Log: AttackLog,
     }
   },
   methods: {
@@ -34,24 +41,34 @@ export default {
         }
       }
     },
+    logAttack(namn: string, event: string, skada: number) {
+      let attack: logObject = {
+        attackID: id++,
+        name: namn,
+        action: event,
+        healthPoints: skada
+      }
+      AttackLog.push(attack)
+    },
     enemyDamage() { //random damage between 8-15
       this.EnemyTurnDamage = this.randomNum(8, 15)
       this.ToreHealth = this.ToreHealth - this.EnemyTurnDamage
-      this.AttackLog.push({ id: id++, text: "Strandraggaren attackerar och dunkar in " + this.EnemyTurnDamage})
+      this.logAttack("Strandraggaren", "attackerar och dunkar in", this.EnemyTurnDamage)
     },
     toreAttack() { //random damage between 5-10
       this.enemyDamage()
       this.ToreTurnDamage = this.randomNum(5, 10)
       this.EnemyHealth = this.EnemyHealth - this.ToreTurnDamage
-      this.AttackLog.push({id: id++, text: "Tore attackerar och dunkar in " + this.ToreTurnDamage})
+      this.logAttack("Tore", "attackerar och dunkar in", this.ToreTurnDamage)
       this.SpecialCounter++
+      console.log(typeof this.Log)
       this.winCheck()
     },
     toreHeal() { //heal between 8-20
       this.enemyDamage() 
       this.ToreTurnDamage = this.randomNum(8, 20)
       this.ToreHealth = this.ToreHealth + this.ToreTurnDamage
-      this.AttackLog.push({ id: id++, text: "Tore healar sig själv " + this.ToreTurnDamage})
+      this.logAttack("Tore", "healar sig själv", this.ToreTurnDamage)
       this.SpecialCounter++
       this.winCheck()
     },
@@ -59,14 +76,14 @@ export default {
       this.enemyDamage()
       this.ToreTurnDamage = this.randomNum(10, 25)
       this.EnemyHealth = this.EnemyHealth - this.ToreTurnDamage
-      this.AttackLog.push({ id: id++, text: "Tore attackerar och dunkar in " + this.ToreTurnDamage})
+      this.logAttack("Tore", "attackerar och dunkar in", this.ToreTurnDamage)
       this.SpecialCounter=0
       this.winCheck()
     }, 
     surrender() {
       this.GameOver = true
       this.Winner = "Strandraggaren"
-      this.AttackLog.push({ id: id++, text: "Tore ger upp"})
+      this.logAttack("Tore", "ger upp", null)
     },
     reset() {
      this.ToreHealth = 100
@@ -74,8 +91,8 @@ export default {
      this.GameOver = false // Use to check whether the game is over and should hide the buttons
      this.Winner = ""
      this.SpecialCounter = 0
-     this.AttackLog = [
-      ]
+     AttackLog = []
+     this.Log = AttackLog
     }
   } 
 }
@@ -86,20 +103,20 @@ export default {
   <h1>Strandraggaren Health: {{EnemyHealth}}</h1>
   <h1>Tore Health: {{ToreHealth}}</h1>
   <div v-if="!GameOver">
-    <Button @click="toreAttack()">Attack</Button>
-    <Button v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
-    <Button @click="toreHeal()">Heal</Button>
-    <Button @click="surrender()">Surrender</Button>
+    <button @click="toreAttack()">Attack</button>
+    <button v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
+    <button @click="toreHeal()">Heal</button>
+    <button @click="surrender()">Surrender</button>
   </div>
   <h1>Resultat</h1>
   <ul>
-    <li v-for="Attack in AttackLog" :key="Attack.id">
-      {{ Attack.text }}
+    <li v-for="Attack in Log" :key="Attack.id">
+      {{Attack.name + " " + Attack.action + " " + Attack.healthPoints}}
     </li>
   </ul>
   <h1>Game Over: {{GameOver}}</h1>
   <h1>Winner: {{Winner}}</h1>
-  <Button v-if="GameOver" @click="reset()">Restart</Button>
+  <button v-if="GameOver" @click="reset()">Restart</button>
 </template>
 
 <style>
