@@ -1,8 +1,7 @@
 <script lang="ts">
 let id = 0;
-let AttackLog: logObject[] = []
 
-interface logObject {
+interface logObject{
   attackID: number;
   name: string;
   action: string;
@@ -19,7 +18,7 @@ export default {
       SpecialCounter: 0,
       EnemyTurnDamage: 0,
       ToreTurnDamage: 0,
-      Log: AttackLog,
+      Log: Array<logObject>()
     }
   },
   methods: {
@@ -48,7 +47,7 @@ export default {
         action: event,
         healthPoints: skada
       }
-      AttackLog.push(attack)
+      this.Log.push(attack)
     },
     enemyDamage() { //random damage between 8-15
       this.EnemyTurnDamage = this.randomNum(8, 15)
@@ -91,8 +90,8 @@ export default {
      this.GameOver = false // Use to check whether the game is over and should hide the buttons
      this.Winner = ""
      this.SpecialCounter = 0
-     AttackLog = []
-     this.Log = AttackLog
+     //AttackLog = []
+     this.Log = []
     }
   } 
 }
@@ -111,7 +110,7 @@ export default {
   <h1>Resultat</h1>
   <ul>
     <li v-for="Attack in Log" :key="Attack.id">
-      {{Attack.name + " " + Attack.action + " " + Attack.healthPoints}}
+      {{Attack.name + " " + Attack.action + " " + (Attack.healthPoints ? Attack.healthPoints : "")}}
     </li>
   </ul>
   <h1>Game Over: {{GameOver}}</h1>
