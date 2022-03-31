@@ -98,23 +98,35 @@ export default {
 </script>
 
 <template>
-  <h1>Dräparen Tore</h1>
-  <h1>Strandraggaren Health: {{EnemyHealth}}</h1>
-  <progress :value="EnemyHealth" max="100" class="progress is-danger"></progress>
-  <h1>Tore Health: {{ToreHealth}}</h1>
-  <progress class="progress is-large" :value="ToreHealth" max="100"></progress>
-  <div v-if="!GameOver">
-    <button @click="toreAttack()">Attack</button>
-    <button v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
-    <button @click="toreHeal()">Heal</button>
-    <button @click="surrender()">Surrender</button>
+  <div class="box">
+    <h1 class="has-text-centered has-text-weight-bold">Dräparen Tore</h1>
   </div>
-  <h1>Resultat</h1>
-  <ul>
-    <li v-for="Attack in Log" :key="Attack.id">
-      {{Attack.name + " " + Attack.action + " " + (Attack.healthPoints ? Attack.healthPoints : "")}}
-    </li>
-  </ul>
+  <div class="box">
+    <h1 class="has-text-centered has-text-weight-bold">Strandraggaren Health</h1>
+    <progress class="progress is-large is-success" :value="EnemyHealth" max="100"></progress>
+  </div>
+  <div class="box">
+    <h1 class="has-text-centered has-text-weight-bold">Tore Health</h1>
+    <progress class="progress is-large is-success" :value="ToreHealth" max="100"></progress>
+  </div>
+  <div class="tile" v-if="!GameOver">
+    <div class="tile is-parent">
+      <button class="button tile is-child" @click="toreAttack()">Attack</button>
+      <button class="button tile is-child" v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
+    </div>
+    <div class="tile is-parent">
+      <button class="button tile is-child" @click="toreHeal()">Heal</button>
+      <button class="button tile is-child" @click="surrender()">Surrender</button>
+    </div>
+  </div>
+  <div class="box">
+    <h1 class="has-text-centered has-text-weight-bold">Resultat</h1>
+    <ul>
+      <li v-for="Attack in Log" :key="Attack.id">
+        {{Attack.name + " " + Attack.action + " " + (Attack.healthPoints ? Attack.healthPoints : "")}}
+      </li>
+    </ul>
+  </div>
   <h1>Game Over: {{GameOver}}</h1>
   <h1>Winner: {{Winner}}</h1>
   <button v-if="GameOver" @click="reset()">Restart</button>
