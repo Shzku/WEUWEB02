@@ -100,7 +100,9 @@ export default {
 <template>
   <h1>Dräparen Tore</h1>
   <h1>Strandraggaren Health: {{EnemyHealth}}</h1>
+  <progress :value="EnemyHealth" max="100" class="progress is-danger"></progress>
   <h1>Tore Health: {{ToreHealth}}</h1>
+  <progress class="progress is-large" :value="ToreHealth" max="100"></progress>
   <div v-if="!GameOver">
     <button @click="toreAttack()">Attack</button>
     <button v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
