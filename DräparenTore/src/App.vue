@@ -97,9 +97,10 @@ export default {
 }
 </script>
 
-<template>
-  <div class="box">
-    <h1 class="has-text-centered has-text-weight-bold">Dräparen Tore</h1>
+<template class="columns">
+<div class="column is-half" style="margin: auto;">
+  <div class="box" style="background: #800000;">
+    <h1 class="has-text-centered has-text-weight-bold is-size-4" style="color: white;">Dräparen Tore</h1>
   </div>
   <div class="box">
     <h1 class="has-text-centered has-text-weight-bold">Strandraggaren Health</h1>
@@ -109,14 +110,14 @@ export default {
     <h1 class="has-text-centered has-text-weight-bold">Tore Health</h1>
     <progress class="progress is-large is-success" :value="ToreHealth" max="100"></progress>
   </div>
-  <div class="tile" v-if="!GameOver">
+  <div class="tile is-vertical" v-if="!GameOver">
     <div class="tile is-parent">
-      <button class="button tile is-child" @click="toreAttack()">Attack</button>
-      <button class="button tile is-child" v-if="SpecialCounter>=3" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
+      <button class="button tile is-child" style="background: #800080; color: white;" @click="toreAttack()">Attack</button>
+      <button class="button tile is-child" style="background: #800080; color: white;" v-if="SpecialCounter" :disabled="isActive">=0" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
     </div>
     <div class="tile is-parent">
-      <button class="button tile is-child" @click="toreHeal()">Heal</button>
-      <button class="button tile is-child" @click="surrender()">Surrender</button>
+      <button class="button tile is-child" style="background: #800080; color: white;" @click="toreHeal()">Heal</button>
+      <button class="button tile is-child" style="background: #800080; color: white;" @click="surrender()">Surrender</button>
     </div>
   </div>
   <div class="box">
@@ -130,6 +131,7 @@ export default {
   <h1>Game Over: {{GameOver}}</h1>
   <h1>Winner: {{Winner}}</h1>
   <button v-if="GameOver" @click="reset()">Restart</button>
+</div>
 </template>
 
 <style>
