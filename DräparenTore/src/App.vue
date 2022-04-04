@@ -113,26 +113,34 @@ export default {
   <div class="tile is-vertical" v-if="!GameOver">
     <div class="tile is-parent">
       <button class="button tile is-child" style="background: #800080; color: white;" @click="toreAttack()">Attack</button>
-      <button class="button tile is-child" style="background: #800080; color: white;" v-if="SpecialCounter" :disabled="isActive">=0" @click="toreSpecial()">Special Attack {{SpecialCounter}}</Button>
+      <button class="button tile is-child" style="background: #800080; color: white;" :disabled="SpecialCounter<3" @click="toreSpecial()">Special Attack</Button>
+
     </div>
     <div class="tile is-parent">
       <button class="button tile is-child" style="background: #800080; color: white;" @click="toreHeal()">Heal</button>
       <button class="button tile is-child" style="background: #800080; color: white;" @click="surrender()">Surrender</button>
     </div>
   </div>
-  <div class="box">
+  <div v-if="!GameOver" class="box">
     <h1 class="has-text-centered has-text-weight-bold">Resultat</h1>
     <ul>
-      <li v-for="Attack in Log" :key="Attack.id">
-        {{Attack.name + " " + Attack.action + " " + (Attack.healthPoints ? Attack.healthPoints : "")}}
+      <li v-for="Attack in Log" :key="Attack.id" class="has-text-centered">
+        <span :style="Attack.name=='Tore' ? {'color': '#8F00FF'} : {'color': '#ffd700'}">{{Attack.name}}&nbsp;</span>
+        <span> {{Attack.action}}&nbsp; </span>
+        <span :style="Attack.action=='attackerar och dunkar in' ? {'color': '#ff0000'} : {'color': '#00ff00'}">{{Attack.healthPoints ? Attack.healthPoints : ""}}</span>
       </li>
     </ul>
   </div>
-  <h1>Game Over: {{GameOver}}</h1>
-  <h1>Winner: {{Winner}}</h1>
-  <button v-if="GameOver" @click="reset()">Restart</button>
+  <div v-else class="box has-text-centered">
+    <h1 class="bold">Game Over!</h1><br>
+    <h1 class="bold">{{Winner=="It's a draw" ? Winner : (Winner + " won!")}}</h1><br>
+    <button class="button" style="background: #800080; color: white;" @click="reset()">Start New Game</button>
+  </div>
 </div>
 </template>
 
 <style>
+.bold {
+  font-weight: bold;
+}
 </style>
