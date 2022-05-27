@@ -47,7 +47,7 @@ export default {
         action: event,
         healthPoints: skada
       }
-      this.Log.push(attack)
+      this.Log.unshift(attack)
     },
     enemyDamage() { //random damage between 8-15
       this.EnemyTurnDamage = this.randomNum(8, 15)
